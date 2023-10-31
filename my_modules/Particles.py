@@ -1,7 +1,7 @@
 import math
 import random
 
-
+# TODO: one class, different objects for different particle "Species"
 class Particles:
     def __init__(self, x_positions, y_positions, speed, model, color):
         self.model = model
@@ -116,51 +116,51 @@ class Particles2:
                 self.speed *= -0.9
 
 
-
-class Particle:
-    def __init__(self, x, y, speed, direction, color):
-        self.x = x
-        self.y = y
-        self.speed = speed
-        self.direction = direction
-        self.color = color
-        self.history = []  # To store the positions for the fading tail
-
-    def update(self, particles):
-        # Update position based on speed and direction
-        self.x += math.cos(self.direction) * self.speed
-        self.y += math.sin(self.direction) * self.speed
-
-        # Add current position to history for the tail
-        self.history.append((self.x, self.y))
-        if len(self.history) > 10:  # Limit the length of the tail
-            self.history.pop(0)
-
-        # Check for collisions with other particles and bounce
-        for particle in particles:
-            if particle != self and self.distance_to(particle) < 10:
-                self.direction = (self.direction + math.pi) % (2 * math.pi)
-
-    def distance_to(self, other_particle):
-        dx = self.x - other_particle.x
-        dy = self.y - other_particle.y
-        return math.sqrt(dx**2 + dy**2)
-
-
-class Particles3:
-    def __init__(self, num_particles, width, height):
-        self.particles = []
-        for _ in range(num_particles):
-            x = random.randint(0, width)
-            y = random.randint(0, height)
-            speed = random.uniform(1, 3)
-            direction = random.uniform(0, 2 * math.pi)
-            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            self.particles.append(Particle(x, y, speed, direction, color))
-
-    def update_positions(self):
-        for particle in self.particles:
-            particle.update(self.particles)
+# TODO: write rules for one particle, then init the system.
+# class Particle:
+#     def __init__(self, x, y, speed, direction, color):
+#         self.x = x
+#         self.y = y
+#         self.speed = speed
+#         self.direction = direction
+#         self.color = color
+#         self.history = []  # To store the positions for the fading tail
+#
+#     def update(self, particles):
+#         # Update position based on speed and direction
+#         self.x += math.cos(self.direction) * self.speed
+#         self.y += math.sin(self.direction) * self.speed
+#
+#         # Add current position to history for the tail
+#         self.history.append((self.x, self.y))
+#         if len(self.history) > 10:  # Limit the length of the tail
+#             self.history.pop(0)
+#
+#         # Check for collisions with other particles and bounce
+#         for particle in particles:
+#             if particle != self and self.distance_to(particle) < 10:
+#                 self.direction = (self.direction + math.pi) % (2 * math.pi)
+#
+#     def distance_to(self, other_particle):
+#         dx = self.x - other_particle.x
+#         dy = self.y - other_particle.y
+#         return math.sqrt(dx**2 + dy**2)
+#
+#
+# class Particles3:
+#     def __init__(self, num_particles, width, height):
+#         self.particles = []
+#         for _ in range(num_particles):
+#             x = random.randint(0, width)
+#             y = random.randint(0, height)
+#             speed = random.uniform(1, 3)
+#             direction = random.uniform(0, 2 * math.pi)
+#             color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+#             self.particles.append(Particle(x, y, speed, direction, color))
+#
+#     def update_positions(self):
+#         for particle in self.particles:
+#             particle.update(self.particles)
 
 
 

@@ -5,7 +5,6 @@ from PyQt5.QtCore import QTimer
 import pyqtgraph as pg
 from Particles import Particles
 from Particles import Particles2
-from Particles import Particles3
 
 class SimulationWidget(QWidget):
     def __init__(self, model):
