@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-def build_executable(script_path, one_file=True, no_console=False, additional_paths=None):
+def build_executable(script_path, one_file=True, no_console=False, additional_paths=None, exe_name=None):
     """
     Build a single executable from a Python script using PyInstaller.
 
@@ -16,9 +16,14 @@ def build_executable(script_path, one_file=True, no_console=False, additional_pa
 
     # Generate initial spec file
     spec_args = [pyinstaller_path, "--onefile" if one_file else "--onedir", script_path]
+
     if no_console:
         spec_args.append("--noconsole")
+    if exe_name:
+        spec_args.extend(["--name", exe_name])
     subprocess.run(spec_args)
+
+
 
     # Modify spec file to include additional paths
     spec_file = os.path.splitext(os.path.basename(script_path))[0] + ".spec"
@@ -36,6 +41,7 @@ def build_executable(script_path, one_file=True, no_console=False, additional_pa
 
     # Build executable using modified spec file
     build_args = [pyinstaller_path, spec_file]
+    print(f"Running command: {' '.join(build_args)}")  # Print the command
     subprocess.run(build_args)
 
 
@@ -43,4 +49,8 @@ if __name__ == "__main__":
     # Example usage
     script_to_convert = "main.py"
     additional_paths = [r'C:\\Users\\Admin\\PycharmProjects\\VisualSimulation\\my_modules']
-    build_executable(script_to_convert, one_file=True, no_console=False, additional_paths=additional_paths)
+    build_executable(script_to_convert,
+                     one_file=True,
+                     no_console=False,
+                     additional_paths=additional_paths,
+                     exe_name="Application")
