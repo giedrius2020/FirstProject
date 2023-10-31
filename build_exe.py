@@ -53,4 +53,4 @@ if __name__ == "__main__":
                      one_file=True,
                      no_console=False,
                      additional_paths=additional_paths,
-                     exe_name="Application")
+                     exe_name="Particle_Simulator")
