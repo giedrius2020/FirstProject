@@ -1,4 +1,4 @@
 import sys
 
-# sys.path.append('my_modules')
+sys.path.append('my_modules')
 
