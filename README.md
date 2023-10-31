@@ -1,2 +1,2 @@
-# VisualSimulation
-Visual Simulation project with PyQT.
+# First project.
+First project with Python and Github.
