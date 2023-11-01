@@ -1,5 +1,5 @@
 # Particle simulator
-The main idea of this project is to create an easily scalable solution, which allows to model various visual particle simulations easily and in a real-time-controlable manner for any kind of parameter like particle count, lifetime, force strength, friction, speed, etc.
+The main idea of this project is to create an easily scalable solution, which allows to model various visual particle simulations easily. Various sorts of system parameters should be controlled in a real-time manner with sliders or other type of user input. Any parameters can be created and controlled. like particle count, lifetime, force strength, friction, speed, etc.
 
 Tools used: Python, MVC, PyQt5, pyqtgraph
 
