@@ -9,7 +9,7 @@ class Controller:
         if slider_index == 0:
             self.model.update_speed(value)
         if slider_index == 1:
-            self.model.update_force_strength(value)
+            self.model.update_repulsion_strength(value)
         if slider_index == 2:
             self.model.update_repulsion_distance(value)
         #print(f"Value: {value}") # 0 - 100
@@ -21,6 +21,6 @@ class Controller:
         if slider_index == 0:
             self.view.slider_labels[slider_index].setText(f"Particle speed: {self.model.speed}")
         if slider_index == 1:
-            self.view.slider_labels[slider_index].setText(f"Force strength: {self.model.force_strength}")
+            self.view.slider_labels[slider_index].setText(f"Repulsion strength: {self.model.repulsion_strength}")
         if slider_index == 2:
             self.view.slider_labels[slider_index].setText(f"Repulsion distance: {self.model.repulsion_distance}")

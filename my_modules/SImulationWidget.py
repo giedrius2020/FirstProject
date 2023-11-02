@@ -3,31 +3,20 @@ import random
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PyQt5.QtCore import QTimer
 import pyqtgraph as pg
-from Particles import Particles
-from Particles import Particles2
+from ParticleSystem import ParticleSystem
+from SpeciesManager import SpeciesManager
 
 class SimulationWidget(QWidget):
     def __init__(self, model):
         super().__init__()
         self.model = model
+        self.species_manager = SpeciesManager(model)
+        self.particle_systems = self.species_manager.all_species
+
+        self.scatter_plots = []  # List to store scatter plots for each particle system
+
+
         self.initUI()
-
-        # Initialize particle positions
-
-        self.x_positions1 = [self.set_starting_positions() for _ in range(self.model.num_particles)]
-        self.y_positions1 = [self.set_starting_positions() for _ in range(self.model.num_particles)]
-
-        self.x_positions2 = [self.set_starting_positions() for _ in range(self.model.num_particles)]
-        self.y_positions2 = [self.set_starting_positions() for _ in range(self.model.num_particles)]
-
-        self.speed = self.model.speed # Adjust this value to make particles move faster or slower
-
-        self.particles1 = Particles(self.x_positions1, self.y_positions1, self.speed, self.model, "red")
-        self.particles2 = Particles2(self.x_positions2, self.y_positions2, self.speed, self.model, "blue")
-
-
-
-        # Define the speed of the particles
 
     def initUI(self):
         self.layout = QVBoxLayout(self)
@@ -42,36 +31,33 @@ class SimulationWidget(QWidget):
         self.graphWidget.setXRange(self.model.x_lim[0], self.model.x_lim[1])
         self.graphWidget.setYRange(self.model.y_lim[0], self.model.y_lim[1])
 
-        # Initialize scatter plot items for particles
-        self.scatter1 = pg.ScatterPlotItem(pen=pg.mkPen(width=0.001, color='r'), brush=pg.mkBrush('r'))
-        self.scatter2 = pg.ScatterPlotItem(pen=pg.mkPen(width=0.001, color='b'), brush=pg.mkBrush('b'))
+        # Create scatter plot items for each particle system
+        for particle_system in self.particle_systems:
+            scatter_plot = pg.ScatterPlotItem(pen=pg.mkPen(width=0.001, color=particle_system.color),
+                                              brush=pg.mkBrush(particle_system.color))
+            self.scatter_plots.append(scatter_plot)
+            self.graphWidget.addItem(scatter_plot)
 
-        self.graphWidget.addItem(self.scatter1)
-        self.graphWidget.addItem(self.scatter2)
+
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_plot)
         self.timer.start()
         self.timer.setInterval(self.model.timer_update_interval)  # Update every 50 milliseconds
 
-    def set_starting_positions(self):
-        return random.gauss(0, 0)
+
 
 
     def update_plot(self):
-        self.speed = self.model.speed  # Adjust this value to make particles move faster or slower
+        self.speed = self.model.speed  # Adjust this value to make particles move faster or slower.
+        # TODO: Refactor to update only during slider changes, not on each frame.
+        # Updating particle system:
+        for particle_system, scatter_plot in zip(self.particle_systems, self.scatter_plots):
+            particle_system.update_positions()
+            particle_system.update_parameters()
 
-        self.update_particle_positions()
-
-        # Update scatter plot data
-        self.scatter1.setData(self.particles1.x_positions, self.particles1.y_positions)
-        self.scatter2.setData(self.particles2.x_positions, self.particles2.y_positions)
-
-
-
-    def update_particle_positions(self):
-        self.particles1.update_positions()
-        self.particles2.update_positions()
+            # Updating scatter data of the system:
+            scatter_plot.setData(particle_system.x_positions, particle_system.y_positions)
 
 
 
