@@ -4,7 +4,11 @@ The main idea of this project is to create a scalable solution, which allows to 
 Tools used: Python, MVC, PyQt5, pyqtgraph
 
 Picture:
+
+
 ![Demo Image](demo.png)
 
 Here is a gif of one of the simulations, where two different "species" are separately reacting to conditions, changed by sliders in real time:
+
+
 ![Alt text](demo.gif)
